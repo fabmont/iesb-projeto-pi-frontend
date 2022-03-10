@@ -1,8 +1,8 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from '@chakra-ui/react';
 
-import theme from "./styles/theme";
-import GlobalStyles from "./styles/globalStyles";
-import Pages from "./pages";
+import theme from './styles/theme';
+import GlobalStyles from './styles/globalStyles';
+import Pages from './pages';
 
 function App() {
   return (
