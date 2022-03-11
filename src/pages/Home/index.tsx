@@ -2,8 +2,12 @@ import { Suspense } from 'react';
 import { Box, Heading } from '@chakra-ui/react';
 import Layout from '../../components/Layout';
 import EventosList, { EventoListLoading } from '../../components/EventosList';
-import PartidosList from '../../components/PartidosList';
-import DeputadosList from '../../components/DeputadosList';
+import PartidosList, {
+  PartidosListLoading,
+} from '../../components/PartidosList';
+import DeputadosList, {
+  DeputadosListLoading,
+} from '../../components/DeputadosList';
 
 const Home: React.FC = () => {
   return (
@@ -22,14 +26,18 @@ const Home: React.FC = () => {
           <Heading size="lg" mb="4">
             Partidos
           </Heading>
-          <PartidosList />
+          <Suspense fallback={<PartidosListLoading />}>
+            <PartidosList />
+          </Suspense>
         </Box>
 
         <Box as="section" pt="4" pb={16}>
           <Heading size="lg" mb="4">
             Deputados
           </Heading>
-          <DeputadosList />
+          <Suspense fallback={<DeputadosListLoading />}>
+            <DeputadosList />
+          </Suspense>
         </Box>
       </Box>
     </Layout>
