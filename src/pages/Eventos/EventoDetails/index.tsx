@@ -18,55 +18,6 @@ import moment from 'moment';
 import Layout from '../../../components/Layout';
 import { useEvento } from '../../../services/fetchers/eventos';
 
-const data = {
-  dados: {
-    uriDeputados: null,
-    uriConvidados: null,
-    fases: null,
-    id: 64674,
-    uri: 'https://dadosabertos.camara.leg.br/api/v2/eventos/64674',
-    dataHoraInicio: '2022-03-07T09:00',
-    dataHoraFim: '2022-03-07T12:34',
-    situacao: 'Encerrada',
-    descricaoTipo: 'Painel',
-    descricao: 'II Encontro Nacional de Procuradoras da Mulher - manhã\r\n',
-    localExterno: null,
-    orgaos: [
-      {
-        id: 537239,
-        uri: 'https://dadosabertos.camara.leg.br/api/v2/orgaos/537239',
-        sigla: 'SEMULHER',
-        nome: 'Secretaria da Mulher',
-        apelido: 'SECRETARIA DA MULHER',
-        codTipoOrgao: 15,
-        tipoOrgao: 'COORDENADORIA DA MULHER',
-        nomePublicacao: 'SECRETARIA DA MULHER',
-      },
-    ],
-    requerimentos: [],
-    localCamara: {
-      nome: 'Anexo II, Plenário 03',
-      predio: null,
-      sala: null,
-      andar: null,
-    },
-    urlDocumentoPauta:
-      'https://dadosabertos.camara.leg.br/api/v2/eventos/64674/pauta',
-    urlRegistro: 'https://www.youtube.com/watch?v=_xMlW_U0Prs',
-  },
-  links: [
-    {
-      rel: 'self',
-      href: 'https://dadosabertos.camara.leg.br/api/v2/eventos/64674',
-    },
-    {
-      rel: 'related',
-      href: 'https://www.youtube.com/watch?v=_xMlW_U0Prs',
-      type: 'text/html',
-    },
-  ],
-};
-
 const EventoDetails: React.FC = () => {
   const { id: eventoId } = useParams();
   const { data: eventoData } = useEvento(eventoId);
