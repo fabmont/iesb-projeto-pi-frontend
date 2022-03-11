@@ -11,6 +11,7 @@ import {
   Tbody,
   Tr,
   Td,
+  Spinner,
 } from '@chakra-ui/react';
 import useSWR from 'swr';
 import { ChevronRightIcon } from '@chakra-ui/icons';
@@ -103,12 +104,18 @@ const EventoDetails: React.FC = () => {
   );
 };
 
+const Loading = () => (
+  <Box h="full" display="flex" alignItems="center" justifyContent="center">
+    <Spinner size="xl" />
+  </Box>
+);
+
 export default () => {
   return (
-    <Suspense fallback="Loading...">
-      <Layout>
+    <Layout>
+      <Suspense fallback={<Loading />}>
         <EventoDetails />
-      </Layout>
-    </Suspense>
+      </Suspense>
+    </Layout>
   );
 };
