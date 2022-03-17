@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { Box, Button, Heading, Stack, Text } from '@chakra-ui/react';
 import { ErrorBoundary as ErrBoundary } from 'react-error-boundary';
-import { QueryErrorResetBoundary } from 'react-query';
+import { useQueryErrorResetBoundary } from 'react-query';
 import { Link } from 'react-router-dom';
 
 const Fallback: React.FC<{ refetch: () => void }> = ({ refetch }) => {
@@ -32,18 +32,17 @@ const Fallback: React.FC<{ refetch: () => void }> = ({ refetch }) => {
 };
 
 const ErrorBoundary: React.FC = ({ children }) => {
+  const { reset } = useQueryErrorResetBoundary();
+
   return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrBoundary
-          fallbackRender={({ resetErrorBoundary }) => (
-            <Fallback refetch={resetErrorBoundary} />
-          )}
-        >
-          {children}
-        </ErrBoundary>
+    <ErrBoundary
+      onReset={reset}
+      fallbackRender={({ resetErrorBoundary }) => (
+        <Fallback refetch={resetErrorBoundary} />
       )}
-    </QueryErrorResetBoundary>
+    >
+      {children}
+    </ErrBoundary>
   );
 };
 
