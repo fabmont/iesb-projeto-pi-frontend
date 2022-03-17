@@ -1,3 +1,4 @@
+import { HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -5,17 +6,16 @@ import {
   Flex,
   Heading,
   IconButton,
+  Link as ChakraLink,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   Stack,
   Text,
-  useColorModeValue,
   useColorMode,
-  Link as ChakraLink,
+  useColorModeValue,
 } from '@chakra-ui/react';
-import { SunIcon, MoonIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -70,7 +70,9 @@ const Header: React.FC = (props) => {
       position="fixed"
       as="nav"
       w="100%"
-      bg={useColorModeValue('#00000008', '#00000016')}
+      bg={useColorModeValue('#00000013', '#00000030')}
+      borderBottomWidth="1px"
+      borderBottomColor={useColorModeValue('#dddcdc', '#2e2e2e')}
       style={{
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
@@ -87,7 +89,7 @@ const Header: React.FC = (props) => {
         justifyContent="space-between"
       >
         <Flex align="center" mr={5}>
-          <Button variant="ghost">
+          <Button variant="ghost" as={Link} to="/">
             <Heading as="h1" size="md" letterSpacing="tighter">
               <Text color={useColorModeValue('gray.800', 'whiteAlpha.900')}>
                 <span role="img" aria-label="hi">

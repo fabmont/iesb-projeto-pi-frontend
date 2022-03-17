@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 import api from '../../api';
 import { IEventoResponse, IEventosResponse } from './index.types';
 
@@ -9,23 +9,17 @@ export const fetchEventos = async <T>(url: string) => {
 };
 
 export const useEventos = () => {
-  const swrData = useSWR(
-    '/eventos',
-    (url) => fetchEventos<IEventosResponse>(url),
-    { suspense: true },
+  const queryData = useQuery('eventos', () =>
+    fetchEventos<IEventosResponse>('/eventos'),
   );
 
-  return swrData;
+  return queryData;
 };
 
 export const useEvento = (eventoId?: string) => {
-  const swrData = useSWR(
-    `/eventos/${eventoId}`,
-    (url) => fetchEventos<IEventoResponse>(url),
-    {
-      suspense: true,
-    },
+  const queryData = useQuery(`eventos/${eventoId}`, () =>
+    fetchEventos<IEventoResponse>(`/eventos/${eventoId}`),
   );
 
-  return swrData;
+  return queryData;
 };

@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import shuffle from 'lodash.shuffle';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useDeputados } from '../../services/fetchers/deputados';
 
@@ -27,7 +28,10 @@ export const DeputadosListLoading = () => {
 
 const EventosList: React.FC = () => {
   const { data } = useDeputados();
-  const displayPartidos = shuffle(data?.dados).slice(0, 4);
+  const displayPartidos = useMemo(
+    () => shuffle(data?.dados).slice(0, 4),
+    [data?.dados],
+  );
 
   return (
     <>

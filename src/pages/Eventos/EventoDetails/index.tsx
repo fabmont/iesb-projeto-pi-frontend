@@ -1,23 +1,26 @@
-import { Suspense } from 'react';
-import { useParams } from 'react-router-dom';
+import { ChevronRightIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Heading,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Tag,
-  Table,
-  Tbody,
-  Tr,
-  Td,
+  Heading,
   Spinner,
+  Table,
+  Tag,
+  Tbody,
+  Td,
+  Text,
+  Tr,
 } from '@chakra-ui/react';
-import useSWR from 'swr';
-import { ChevronRightIcon } from '@chakra-ui/icons';
 import moment from 'moment';
+import { Suspense } from 'react';
+import { useParams } from 'react-router-dom';
+import useSWR from 'swr';
+import ErrorBoundary from '../../../components/ErrorBoundary';
 import Layout from '../../../components/Layout';
 import { useEvento } from '../../../services/fetchers/eventos';
+import * as S from './styles';
 
 const EventoDetails: React.FC = () => {
   const { id: eventoId } = useParams();
@@ -37,11 +40,11 @@ const EventoDetails: React.FC = () => {
   };
 
   return (
-    <Box h="full" mt="4">
+    <Box h="full" mt={4}>
       <Breadcrumb
         spacing="8px"
         separator={<ChevronRightIcon color="blue.500" />}
-        mb="4"
+        mb={4}
         colorScheme="blue"
       >
         <BreadcrumbItem>
@@ -57,19 +60,19 @@ const EventoDetails: React.FC = () => {
         </BreadcrumbItem>
       </Breadcrumb>
 
-      <Tag colorScheme={handleSituationColor()} mb="2">
+      <Tag colorScheme={handleSituationColor()} mb={2}>
         {dados?.situacao}
       </Tag>
-      <Heading mb="8">{dados?.descricao}</Heading>
+      <Heading mb={8}>{dados?.descricao}</Heading>
 
-      <Heading size="md" mb="4">
+      <Heading size="md" mb={4}>
         Informações gerais
       </Heading>
-      <Box borderWidth="1px" borderRadius="md" mb="6">
+      <Box borderWidth="1px" borderRadius="md" mb={6}>
         <Table variant="simple" size="sm">
           <Tbody>
             <Tr>
-              <Td fontWeight="bold">Órgãos:</Td>
+              <Td fontWeight="bold">Órgão(s):</Td>
               <Td>{dados?.orgaos.map((i) => i.sigla).join(', ') ?? '--'}</Td>
             </Tr>
             <Tr>
@@ -96,10 +99,20 @@ const EventoDetails: React.FC = () => {
         </Table>
       </Box>
 
-      <Heading size="md" mb="4">
+      <Heading size="md" mb={4}>
         Registro
       </Heading>
-      <Box dangerouslySetInnerHTML={{ __html: youtubeIframe?.html }} />
+      {youtubeIframe?.html ? (
+        <Box
+          css={S.IframeStyle}
+          pb={16}
+          dangerouslySetInnerHTML={{
+            __html: youtubeIframe?.html?.replace('133', '350'),
+          }}
+        />
+      ) : (
+        <Text>Nenhum registro foi definido.</Text>
+      )}
     </Box>
   );
 };
@@ -113,9 +126,11 @@ const Loading = () => (
 export default () => {
   return (
     <Layout>
-      <Suspense fallback={<Loading />}>
-        <EventoDetails />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <EventoDetails />
+        </Suspense>
+      </ErrorBoundary>
     </Layout>
   );
 };

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -24,7 +25,10 @@ export const PartidosListLoading = () => {
 
 const PartidosList: React.FC = () => {
   const { data } = usePartidos();
-  const displayPartidos = shuffle(data?.dados).slice(0, 4);
+  const displayPartidos = useMemo(
+    () => shuffle(data?.dados).slice(0, 4),
+    [data?.dados],
+  );
 
   return (
     <>

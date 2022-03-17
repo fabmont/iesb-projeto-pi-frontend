@@ -9,7 +9,9 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import truncateText from '../../helpers/truncateString';
 import { useEventos } from '../../services/fetchers/eventos';
 
 export const EventoListLoading = () => {
@@ -25,7 +27,7 @@ export const EventoListLoading = () => {
 
 const EventosList: React.FC = () => {
   const { data } = useEventos();
-  const displayPartidos = data?.dados.slice(0, 4);
+  const displayPartidos = useMemo(() => data?.dados.slice(0, 4), [data?.dados]);
 
   return (
     <>
@@ -56,8 +58,8 @@ const EventosList: React.FC = () => {
                   </Badge>
                 ))}
               </Stack>
-              <Text fontWeight="bold" mb="2">
-                {item.descricao}
+              <Text fontWeight="bold" mb="2" title={item.descricao}>
+                {truncateText(item.descricao, 120)}
               </Text>
               <Text fontSize="sm" opacity={0.6}>
                 {formattedStartDate}{' '}
