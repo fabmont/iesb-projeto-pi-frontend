@@ -15,22 +15,26 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import { Suspense } from 'react';
+import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import useSWR from 'swr';
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Layout from '../../../components/Layout';
+import truncateText from '../../../helpers/truncateString';
 import { useEvento } from '../../../services/fetchers/eventos';
+import DeputadosGroup from './DeputadosGroup';
 import * as S from './styles';
 
 const EventoDetails: React.FC = () => {
   const { id: eventoId } = useParams();
   const { data: eventoData } = useEvento(eventoId);
   const dados = eventoData?.dados;
-  const { data: youtubeIframe } = useSWR(
-    dados?.urlRegistro
-      ? `https://www.youtube.com/oembed?url=${dados?.urlRegistro}`
-      : null,
-    (url) => fetch(url).then((res) => res.json()),
+  const youtubeURL = `https://www.youtube.com/oembed?url=${dados?.urlRegistro}`;
+  const { data: youtubeIframe } = useQuery(
+    youtubeURL,
+    () => fetch(youtubeURL).then((res) => res.json()),
+    {
+      enabled: !!dados?.urlRegistro,
+    },
   );
 
   const handleSituationColor = () => {
@@ -56,7 +60,9 @@ const EventoDetails: React.FC = () => {
         </BreadcrumbItem>
 
         <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink>{dados?.descricao.slice(0, 24)}</BreadcrumbLink>
+          <BreadcrumbLink title={dados?.descricao}>
+            {truncateText(dados?.descricao ?? '', 30)}
+          </BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
 
@@ -65,7 +71,7 @@ const EventoDetails: React.FC = () => {
       </Tag>
       <Heading mb={8}>{dados?.descricao}</Heading>
 
-      <Heading size="md" mb={4}>
+      <Heading size="md" my={6}>
         Informações gerais
       </Heading>
       <Box borderWidth="1px" borderRadius="md" mb={6}>
@@ -98,6 +104,11 @@ const EventoDetails: React.FC = () => {
           </Tbody>
         </Table>
       </Box>
+
+      <Heading size="md" mb={4}>
+        Deputados participantes
+      </Heading>
+      <DeputadosGroup />
 
       <Heading size="md" mb={4}>
         Registro

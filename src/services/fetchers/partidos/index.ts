@@ -1,15 +1,15 @@
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 import api from '../../api';
 import { IPartidosResponse } from './index.types';
 
-export const fetchPartidos = async (url: string) => {
-  const { data } = await api.get<IPartidosResponse>(url);
+export const fetchPartidos = async () => {
+  const { data } = await api.get<IPartidosResponse>('/partidos');
 
   return data;
 };
 
 export const usePartidos = () => {
-  const swrData = useSWR('/partidos', fetchPartidos, { suspense: true });
+  const queryData = useQuery('partidos', fetchPartidos);
 
-  return swrData;
+  return queryData;
 };

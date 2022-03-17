@@ -71,8 +71,6 @@ const Header: React.FC = (props) => {
       as="nav"
       w="100%"
       bg={useColorModeValue('#00000013', '#00000030')}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue('#dddcdc', '#2e2e2e')}
       style={{
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',

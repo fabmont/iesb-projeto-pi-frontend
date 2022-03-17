@@ -1,8 +1,9 @@
 import { useQuery } from 'react-query';
 import api from '../../api';
+import { IDeputadosResponse } from '../deputados/index.types';
 import { IEventoResponse, IEventosResponse } from './index.types';
 
-export const fetchEventos = async <T>(url: string) => {
+export const fetcher = async <T>(url: string) => {
   const { data } = await api.get<T>(url);
 
   return data;
@@ -10,7 +11,7 @@ export const fetchEventos = async <T>(url: string) => {
 
 export const useEventos = () => {
   const queryData = useQuery('eventos', () =>
-    fetchEventos<IEventosResponse>('/eventos'),
+    fetcher<IEventosResponse>('/eventos'),
   );
 
   return queryData;
@@ -18,7 +19,15 @@ export const useEventos = () => {
 
 export const useEvento = (eventoId?: string) => {
   const queryData = useQuery(`eventos/${eventoId}`, () =>
-    fetchEventos<IEventoResponse>(`/eventos/${eventoId}`),
+    fetcher<IEventoResponse>(`/eventos/${eventoId}`),
+  );
+
+  return queryData;
+};
+
+export const useDeputadosEvento = (eventoId?: string) => {
+  const queryData = useQuery(`eventos/${eventoId}/deputados`, () =>
+    fetcher<IDeputadosResponse>(`/eventos/${eventoId}/deputados`),
   );
 
   return queryData;

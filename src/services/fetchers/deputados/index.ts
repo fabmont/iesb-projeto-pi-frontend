@@ -1,15 +1,15 @@
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 import api from '../../api';
 import { IDeputadosResponse } from './index.types';
 
-export const fetchDeputados = async (url: string) => {
-  const { data } = await api.get<IDeputadosResponse>(url);
+export const fetchDeputados = async () => {
+  const { data } = await api.get<IDeputadosResponse>('/deputados');
 
   return data;
 };
 
 export const useDeputados = () => {
-  const swrData = useSWR('/deputados', fetchDeputados, { suspense: true });
+  const queryData = useQuery('deputados', fetchDeputados);
 
-  return swrData;
+  return queryData;
 };
