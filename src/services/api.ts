@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+export const BASE_URL = 'https://dadosabertos.camara.leg.br/api/v2/';
+
 const api = axios.create({
-  baseURL: 'https://dadosabertos.camara.leg.br/api/v2/',
+  baseURL: BASE_URL,
 });
 
 export default api;

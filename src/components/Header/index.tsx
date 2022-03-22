@@ -46,7 +46,7 @@ const ThemeToggleButton = () => {
 
 const LinkItem: React.FC<{ to: string }> = ({ to, children, ...props }) => {
   const { pathname } = useLocation();
-  const active = pathname === to;
+  const active = to === '/' ? pathname === to : pathname.includes(to);
   const inactiveColor = useColorModeValue('gray200', 'whiteAlpha.900');
 
   return (

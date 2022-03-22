@@ -6,7 +6,7 @@ const Layout: React.FC = ({ children }) => {
   return (
     <Box as="main" minH="full" h="full">
       <Header />
-      <Container maxW="container.lg" pt={16} h="full">
+      <Container maxW="container.xl" pt={16} h="full">
         {children}
       </Container>
     </Box>
