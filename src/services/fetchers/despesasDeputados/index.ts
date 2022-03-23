@@ -12,12 +12,17 @@ export const useDeputadosDespesas = (
   deputadoId: string,
   params: IDespesaParams,
 ) => {
-  const queryData = useQuery('eventos', () =>
-    fetcher<IDespesasResponse>(`/deputados/${deputadoId}/despesas`, {
-      ...params,
-      itens: 8,
-      ordenarPor: 'ano',
-    }),
+  const queryData = useQuery(
+    `deputado/${deputadoId}/despesas`,
+    () =>
+      fetcher<IDespesasResponse>(`/deputados/${deputadoId}/despesas`, {
+        ...params,
+        itens: 10,
+        ordenarPor: 'mes',
+      }),
+    {
+      enabled: false,
+    },
   );
 
   return queryData;

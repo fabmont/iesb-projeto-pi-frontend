@@ -18,9 +18,13 @@ const ChartTooltip = ({ active, payload }: TooltipProps<number, string>) => {
           {payload?.[0]?.payload?.tipoDespesa &&
             capitalizeString(payload?.[0]?.payload?.tipoDespesa)}
         </Text>
-        <Heading size="md">
+        <Heading size="md" mb={2}>
           {payload?.[0]?.value && `${formatCurrency(payload?.[0]?.value || 0)}`}
         </Heading>
+        <Text fontSize="sm">
+          {payload?.[0]?.payload?.nomeFornecedor &&
+            capitalizeString(payload?.[0]?.payload?.nomeFornecedor)}
+        </Text>
       </Box>
     );
   }

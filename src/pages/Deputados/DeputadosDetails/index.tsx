@@ -75,7 +75,7 @@ const DeputadosDetails: React.FC = () => {
         </Stack>
       </Box>
 
-      <Stack direction={['column', 'row']} mt="2">
+      <Stack direction={['column', 'column', 'row']} mt="2">
         <Stack w={['full', 'full', 'full', 'md']}>
           <Box
             w="full"

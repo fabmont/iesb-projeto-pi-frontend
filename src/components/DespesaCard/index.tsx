@@ -1,3 +1,4 @@
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -8,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import 'moment/locale/pt-br';
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Area,
@@ -51,19 +52,46 @@ const months = [
 
 const DespesaCard: React.FC = () => {
   const { id = '' } = useParams();
-  const { data } = useDeputadosDespesas(id, {});
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1;
+  const [selectedMonth, setSelectedMonth] = useState<string>('');
+  const [selectedYear, setSelectedYear] = useState<string>(
+    currentYear.toString(),
+  );
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { data, refetch } = useDeputadosDespesas(id, {
+    ano: selectedYear,
+    mes: selectedMonth,
+    pagina: currentPage,
+  });
 
   const chartData = useMemo(
     () =>
       data?.dados?.map((despesa) => ({
-        dataDespesa: moment(despesa.dataDocumento).format('MMM, YY'),
+        dataDespesa: moment(`${despesa.mes}-${despesa.ano}`, 'MM-YYYY').format(
+          'MMM, YY',
+        ),
         tipoDespesa: despesa.tipoDespesa,
         valorDespesa: despesa.valorLiquido,
+        nomeFornecedor: despesa.nomeFornecedor,
       })),
     [data?.dados],
   );
+
+  useEffect(() => {
+    refetch();
+  }, [selectedMonth, selectedYear, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedMonth, selectedYear]);
+
+  const paginateNext = useCallback(() => {
+    setCurrentPage((prev) => prev + 1);
+  }, []);
+
+  const paginatePrevious = useCallback(() => {
+    setCurrentPage((prev) => prev - 1);
+  }, []);
 
   return (
     <Box
@@ -76,29 +104,42 @@ const DespesaCard: React.FC = () => {
       <Heading size="md">Despesas</Heading>
 
       <Stack direction={['column', 'row']} mt={4} mb={8}>
-        <Select placeholder="Mês" value={currentMonth}>
+        <Select
+          placeholder="Selecione..."
+          defaultValue={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
           {months.map(({ label, value }) => (
-            <option key={value}>{label}</option>
+            <option key={value} value={value}>
+              {label}
+            </option>
           ))}
         </Select>
-        <Select placeholder="Ano">
+        <Select
+          defaultValue={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+        >
           {createYears().map((year) => (
-            <option selected={!!currentYear} key={year}>
+            <option key={year} value={year}>
               {year}
             </option>
           ))}
         </Select>
       </Stack>
 
-      <ResponsiveContainer width="100%" height={350}>
-        <AreaChart data={chartData}>
+      <ResponsiveContainer height={320} width="100%">
+        <AreaChart
+          data={chartData}
+          margin={{ top: 0, right: 20, bottom: 0, left: 24 }}
+        >
           <Area type="monotone" dataKey="valorDespesa" />
-          <XAxis dataKey="dataDespesa" tickLine={false} />
+          <XAxis dataKey="dataDespesa" tickLine={false} fontSize={12} />
           <YAxis
             dataKey="valorDespesa"
             axisLine={false}
             tickLine={false}
             tickFormatter={(val: number) => formatCurrency(val)}
+            fontSize={12}
           />
           <Tooltip
             label="Valor da despesa"
@@ -109,10 +150,26 @@ const DespesaCard: React.FC = () => {
         </AreaChart>
       </ResponsiveContainer>
 
-      <Box display="flex" justifyContent="space-between" mt={6}>
-        <Button variant="outline">Anterior</Button>
-        <Button variant="outline">Próximo</Button>
-      </Box>
+      <Stack spacing={4} mt={6} direction="row" justify="center">
+        <Button
+          variant="outline"
+          leftIcon={<ArrowBackIcon />}
+          size="sm"
+          isDisabled={currentPage <= 1}
+          onClick={paginatePrevious}
+        >
+          Anterior
+        </Button>
+        <Button
+          variant="outline"
+          rightIcon={<ArrowForwardIcon />}
+          size="sm"
+          isDisabled={!data?.links?.find((i) => i.rel === 'next')}
+          onClick={paginateNext}
+        >
+          Próximo
+        </Button>
+      </Stack>
     </Box>
   );
 };

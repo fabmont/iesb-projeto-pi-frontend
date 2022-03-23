@@ -1,6 +1,6 @@
 export interface IDespesaParams {
-  ano?: number[] | number;
-  mes?: number[] | number;
+  ano?: number[] | number | string[] | string;
+  mes?: number[] | number | string[] | string;
   pagina?: number;
   ordenarPor?: 'ano' | 'mes';
   itens?: number;

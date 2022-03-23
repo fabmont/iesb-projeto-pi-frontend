@@ -1,3 +1,6 @@
 export default function formatCurrency(number: number) {
-  return `R$ ${Intl.NumberFormat('pt-BR').format(number)}`;
+  return `${Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(number)}`;
 }
