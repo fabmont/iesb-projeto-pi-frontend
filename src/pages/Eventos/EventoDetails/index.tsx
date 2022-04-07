@@ -105,24 +105,21 @@ const EventoDetails: React.FC = () => {
         </Table>
       </Box>
 
-      <Heading size="md" mb={4}>
-        Deputados participantes
-      </Heading>
       <DeputadosGroup />
 
-      <Heading size="md" mb={4}>
-        Registro
-      </Heading>
-      {youtubeIframe?.html ? (
-        <Box
-          css={S.IframeStyle}
-          pb={16}
-          dangerouslySetInnerHTML={{
-            __html: youtubeIframe?.html?.replace('133', '350'),
-          }}
-        />
-      ) : (
-        <Text>Nenhum registro foi definido.</Text>
+      {youtubeIframe?.html && (
+        <>
+          <Heading size="md" mb={4}>
+            Registro
+          </Heading>
+          <Box
+            css={S.IframeStyle}
+            pb={16}
+            dangerouslySetInnerHTML={{
+              __html: youtubeIframe?.html?.replace('133', '350'),
+            }}
+          />
+        </>
       )}
     </Box>
   );

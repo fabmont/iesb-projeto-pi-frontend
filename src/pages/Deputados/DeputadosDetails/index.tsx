@@ -1,7 +1,10 @@
 import { Suspense } from 'react';
-import { EmailIcon } from '@chakra-ui/icons';
+import { ChevronRightIcon, EmailIcon } from '@chakra-ui/icons';
 import {
   Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
   Heading,
   Icon,
   Img,
@@ -15,7 +18,7 @@ import {
   useColorModeValue,
   Wrap,
 } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaMapPin } from 'react-icons/fa';
 
 import moment from 'moment';
@@ -25,6 +28,7 @@ import capitalizeString from '../../../helpers/capitalizeString';
 import formatCpf from '../../../helpers/formatCpf';
 import { useDeputado } from '../../../services/fetchers/deputados';
 import DespesaCard from '../../../components/DespesaCard';
+import truncateText from '../../../helpers/truncateString';
 
 const DeputadosDetails: React.FC = () => {
   const { id } = useParams();
@@ -32,6 +36,31 @@ const DeputadosDetails: React.FC = () => {
 
   return (
     <Box h="full" py={4}>
+      <Breadcrumb
+        spacing="8px"
+        separator={<ChevronRightIcon color="blue.500" />}
+        mb={4}
+        colorScheme="blue"
+      >
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to="/">
+            🏠
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to="/deputados">
+            Deputados
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink title={data?.dados?.ultimoStatus?.nome}>
+            {truncateText(data?.dados?.ultimoStatus?.nome ?? '', 30)}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
       <Box
         w="full"
         borderWidth="1px"
