@@ -14,6 +14,9 @@ const ChartTooltip = ({ active, payload }: TooltipProps<number, string>) => {
         maxWidth="300px"
         bg={useColorModeValue('gray.100', 'gray.800')}
       >
+        <Text mb={4} fontSize="sm">
+          {payload?.[0]?.payload?.dataDocumento}
+        </Text>
         <Text fontSize="sm" mb={2}>
           {payload?.[0]?.payload?.tipoDespesa &&
             capitalizeString(payload?.[0]?.payload?.tipoDespesa)}

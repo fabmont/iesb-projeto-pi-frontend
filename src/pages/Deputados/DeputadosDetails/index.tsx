@@ -130,6 +130,11 @@ const DeputadosDetails: React.FC = () => {
                   <Td fontWeight="bold">Data de nascimento:</Td>
                   <Td>
                     {moment(data?.dados?.dataNascimento).format('DD/MM/YYYY')}
+                    <br />({moment().diff(
+                      data?.dados?.dataNascimento,
+                      'years',
+                    )}{' '}
+                    anos)
                   </Td>
                 </Tr>
                 <Tr>
@@ -192,6 +197,7 @@ const DeputadosDetails: React.FC = () => {
 
         <DespesaCard />
       </Stack>
+      <Box h={4} />
     </Box>
   );
 };

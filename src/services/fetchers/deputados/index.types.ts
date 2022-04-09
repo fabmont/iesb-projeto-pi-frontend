@@ -10,6 +10,15 @@ export interface IDeputadosDetails {
   email: string;
 }
 
+export interface IDeputadosParams {
+  nome?: string;
+  siglaUf?: string;
+  siglaPartido?: string | string[];
+  pagina?: number;
+  itens?: number;
+  ordenarPor?: 'id' | 'idLegislatura' | 'nome' | 'siglaUF' | 'siglaPartido';
+}
+
 export interface IDeputadosLinks {
   href: string;
   rel: string;

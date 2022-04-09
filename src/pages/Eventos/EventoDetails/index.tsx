@@ -10,7 +10,6 @@ import {
   Tag,
   Tbody,
   Td,
-  Text,
   Tr,
 } from '@chakra-ui/react';
 import moment from 'moment';

@@ -68,8 +68,9 @@ const DespesaCard: React.FC = () => {
     () =>
       data?.dados?.map((despesa) => ({
         dataDespesa: moment(`${despesa.mes}-${despesa.ano}`, 'MM-YYYY').format(
-          'MMM, YY',
+          'MMM',
         ),
+        dataDocumento: moment(despesa.dataDocumento).format('DD/MM/YYYY'),
         tipoDespesa: despesa.tipoDespesa,
         valorDespesa: despesa.valorLiquido,
         nomeFornecedor: despesa.nomeFornecedor,
