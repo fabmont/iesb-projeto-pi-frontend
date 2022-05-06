@@ -82,3 +82,32 @@ export interface IEventoResponse {
   dados: IDetalheEvento;
   links: ILinksEvento[];
 }
+
+export interface IEventosParams {
+  dataInicio?: string;
+  dataFim?: string;
+  codSituacao?: string;
+  codTipoEvento?: string;
+  ordem?: 'asc' | 'desc';
+  ordenarPor?:
+    | 'id'
+    | 'dataHoraInicio'
+    | 'dataHoraFim'
+    | 'descricaoSituacao'
+    | 'descricaoTipo'
+    | 'titulo';
+  itens?: number;
+  pagina?: number;
+}
+
+export interface ISituacaoEvento {
+  cod: string;
+  sigla?: string;
+  nome: string;
+  descricao?: string;
+}
+
+export interface ISituacaoEventoResponse {
+  dados: ISituacaoEvento[];
+  links: ILinksEvento[];
+}
