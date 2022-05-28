@@ -157,6 +157,13 @@ const DeputadosDashboard: React.FC = () => {
                 <Td>{dep.email}</Td>
               </Tr>
             ))}
+            {!deputados?.length && (
+              <Tr>
+                <Td colSpan={5} textAlign="center">
+                  Nenhum deputado encontrado.
+                </Td>
+              </Tr>
+            )}
           </Tbody>
         </Table>
       </Box>

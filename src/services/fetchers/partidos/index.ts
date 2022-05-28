@@ -1,16 +1,25 @@
 import { useQuery } from 'react-query';
 import api from '../../api';
-import { IPartidoResponse, IPartidosResponse } from './index.types';
+import {
+  IPartidoResponse,
+  IPartidosParams,
+  IPartidosResponse,
+} from './index.types';
 
-export const fetcher = async <T>(url: string) => {
-  const { data } = await api.get<T>(url);
+export const fetcher = async <T>(url: string, params?: IPartidosParams) => {
+  const { data } = await api.get<T>(url, { params });
 
   return data;
 };
 
-export const usePartidos = () => {
-  const queryData = useQuery('partidos', () =>
-    fetcher<IPartidosResponse>('/partidos'),
+export const usePartidos = (
+  params?: IPartidosParams,
+  reactQueryParams: { enabled?: boolean } = {},
+) => {
+  const queryData = useQuery(
+    'partidos',
+    () => fetcher<IPartidosResponse>('/partidos', params),
+    reactQueryParams,
   );
 
   return queryData;

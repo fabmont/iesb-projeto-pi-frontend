@@ -47,3 +47,13 @@ export interface IPartidoResponse {
   dados: IPartidoDetail;
   links: ILinksPartido[];
 }
+
+export interface IPartidosParams {
+  sigla?: string;
+  dataInicio?: string;
+  dataFim?: string;
+  pagina?: number;
+  itens?: number;
+  ordenarPor?: 'id' | 'sigla' | 'nome' | 'dataInicio' | 'dataFim';
+  ordem: 'desc' | 'asc';
+}

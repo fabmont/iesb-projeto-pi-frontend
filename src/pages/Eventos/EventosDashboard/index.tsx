@@ -169,6 +169,13 @@ const EventoDashboard: React.FC = () => {
                 </Td>
               </Tr>
             ))}
+            {!eventos?.length && (
+              <Tr>
+                <Td colSpan={4} textAlign="center">
+                  Nenhum evento encontrado.
+                </Td>
+              </Tr>
+            )}
           </Tbody>
         </Table>
       </Box>
